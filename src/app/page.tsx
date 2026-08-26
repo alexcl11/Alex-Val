@@ -84,7 +84,7 @@ export default function BucketList() {
           </TabsList>
         </Tabs>
 
-        <Select value={sort} onValueChange={setSort}>
+        <Select value={sort} onValueChange={(value) => value && setSort(value)}>
           <SelectTrigger className="w-full sm:w-[180px]">
             <SelectValue placeholder="Ordenar por..." />
           </SelectTrigger>

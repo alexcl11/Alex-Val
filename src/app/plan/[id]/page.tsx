@@ -34,7 +34,7 @@ export default function PlanDetailPage() {
     const { data: planData } = await supabase.from("plans").select("*").eq("id", id).single();
     const { data: photosData } = await supabase.from("plan_photos").select("*").eq("plan_id", id).order("created_at", { ascending: false });
     const { data: reviewsData } = await supabase
-      .from("plan_notes")
+      .from("plan_reviews")
       .select("*")
       .eq("plan_id", id)
       .order("created_at", { ascending: false });
@@ -240,7 +240,7 @@ export default function PlanDetailPage() {
                     ))}
                   </div>
                 </div>
-                <p className="text-muted-foreground italic">&ldquo;{review.content}&rdquo;</p>
+                <p className="text-muted-foreground italic">&ldquo;{review.reflection}&rdquo;</p>
               </div>
             ))
           )}

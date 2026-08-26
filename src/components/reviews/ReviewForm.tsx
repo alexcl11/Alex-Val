@@ -19,13 +19,13 @@ export function ReviewForm({ planId, onReviewAdded }: { planId: string; onReview
 
     const formData = new FormData(e.currentTarget);
     const author_name = formData.get("author_name") as string;
-    const content = formData.get("reflection") as string;
+    const reflection = formData.get("reflection") as string;
     const rating = parseInt(formData.get("rating") as string, 10);
 
-    const { error } = await supabase.from("plan_notes").insert({
+    const { error } = await supabase.from("plan_reviews").insert({
       plan_id: planId,
       author_name,
-      content,
+      reflection,
       rating,
     });
 

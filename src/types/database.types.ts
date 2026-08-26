@@ -92,12 +92,12 @@ export interface Database {
           }
         ]
       }
-      plan_reviews: {
+      plan_notes: {
         Row: {
           id: string
           plan_id: string
           author_name: string
-          reflection: string
+          content: string
           rating: number | null
           created_at: string | null
         }
@@ -105,7 +105,7 @@ export interface Database {
           id?: string
           plan_id: string
           author_name: string
-          reflection: string
+          content: string
           rating?: number | null
           created_at?: string | null
         }
@@ -113,13 +113,13 @@ export interface Database {
           id?: string
           plan_id?: string
           author_name?: string
-          reflection?: string
+          content?: string
           rating?: number | null
           created_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "plan_reviews_plan_id_fkey"
+            foreignKeyName: "plan_notes_plan_id_fkey"
             columns: ["plan_id"]
             isOneToOne: false
             referencedRelation: "plans"

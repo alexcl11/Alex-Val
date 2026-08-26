@@ -14,7 +14,7 @@ import { Database } from "@/types/database.types";
 
 type Plan = Database["public"]["Tables"]["plans"]["Row"];
 type Photo = Database["public"]["Tables"]["plan_photos"]["Row"];
-type Review = Database["public"]["Tables"]["plan_reviews"]["Row"];
+type Review = Database["public"]["Tables"]["plan_notes"]["Row"];
 
 export default function PlanDetailPage() {
   const params = useParams();
@@ -34,7 +34,7 @@ export default function PlanDetailPage() {
     const { data: planData } = await supabase.from("plans").select("*").eq("id", id).single();
     const { data: photosData } = await supabase.from("plan_photos").select("*").eq("plan_id", id).order("created_at", { ascending: false });
     const { data: reviewsData } = await supabase
-      .from("plan_reviews")
+      .from("plan_notes")
       .select("*")
       .eq("plan_id", id)
       .order("created_at", { ascending: false });
@@ -88,7 +88,7 @@ export default function PlanDetailPage() {
     const channel = supabase
       .channel(`plan-${id}`)
       .on("postgres_changes", { event: "*", schema: "public", table: "plan_photos", filter: `plan_id=eq.${id}` }, fetchData)
-      .on("postgres_changes", { event: "*", schema: "public", table: "plan_reviews", filter: `plan_id=eq.${id}` }, fetchData)
+      .on("postgres_changes", { event: "*", schema: "public", table: "plan_notes", filter: `plan_id=eq.${id}` }, fetchData)
       .subscribe();
 
     return () => {
@@ -240,7 +240,7 @@ export default function PlanDetailPage() {
                     ))}
                   </div>
                 </div>
-                <p className="text-muted-foreground italic">&ldquo;{review.reflection}&rdquo;</p>
+                <p className="text-muted-foreground italic">&ldquo;{review.content}&rdquo;</p>
               </div>
             ))
           )}

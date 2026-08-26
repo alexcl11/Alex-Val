@@ -26,6 +26,7 @@ export default function PlanDetailPage() {
   const [loading, setLoading] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isUpdatingLocation, setIsUpdatingLocation] = useState(false);
+  const [isLocationDialogOpen, setIsLocationDialogOpen] = useState(false);
   const router = useRouter();
 
   const fetchData = async () => {
@@ -78,6 +79,7 @@ export default function PlanDetailPage() {
     await supabase.from("plans").update({ location_name, location_url }).eq("id", plan.id);
     await fetchData();
     setIsUpdatingLocation(false);
+    setIsLocationDialogOpen(false);
   };
 
   useEffect(() => {
@@ -141,7 +143,7 @@ export default function PlanDetailPage() {
             </a>
           )}
           
-          <Dialog>
+          <Dialog open={isLocationDialogOpen} onOpenChange={setIsLocationDialogOpen}>
             <DialogTrigger render={<button type="button" className={buttonVariants({ variant: "outline", size: "sm" })} />}>
               <Edit2Icon className="w-4 h-4 mr-2" /> Ubicación
             </DialogTrigger>
